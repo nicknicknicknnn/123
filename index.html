@@ -3,38 +3,553 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nick - HR</title>
+    <title>Nick - HR专家 | 人力资源与AI融合</title>
     <style>
+        /* 基础样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
-            font-family: Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #ffffff;
+        }
+        
+        /* 导航栏 */
+        nav {
+            background-color: #2c5aa0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(44,90,160,0.1);
+        }
+        
+        nav ul {
             display: flex;
             justify-content: center;
-            align-items: center;
+            list-style: none;
+            padding: 1rem 0;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        nav li {
+            margin: 0 2rem;
+        }
+        
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        nav a:hover {
+            color: #ff6b35;
+        }
+        
+        /* 头部区域 */
+        .hero {
             height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, #2c5aa0 0%, #3d6db0 100%);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.03)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.03)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+        
+        .hero .subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+        
+        .hero .tagline {
+            font-size: 1.1rem;
+            margin-bottom: 2.5rem;
+            background: rgba(255,107,53,0.9);
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            display: inline-block;
+            font-weight: 500;
+        }
+        
+        /* 内容区域通用样式 */
+        .section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+            color: #2c5aa0;
+            font-weight: 600;
+        }
+        
+        /* 关于我部分 */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 3rem;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+        
+        .profile-image {
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2c5aa0, #ff6b35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            box-shadow: 0 15px 30px rgba(44,90,160,0.2);
+        }
+        
+        .profile-image img {
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid white;
+        }
+        
+        .profile-image .placeholder {
+            font-size: 4rem;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+        }
+        
+        .about-text p {
+            margin-bottom: 1.5rem;
+        }
+        
+        /* 核心技能 */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .skill-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(44,90,160,0.1);
+            border-left: 4px solid #ff6b35;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(44,90,160,0.15);
+        }
+        
+        .skill-card h3 {
+            color: #2c5aa0;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+        
+        .skill-card ul {
+            list-style: none;
+        }
+        
+        .skill-card li {
+            padding: 0.5rem 0;
+            color: #666;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .skill-card li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #ff6b35;
+            font-weight: bold;
+        }
+        
+        /* AI产品展示 */
+        .ai-products {
+            background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);
+            margin: 0 -2rem;
+            padding: 4rem 2rem;
+        }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(44,90,160,0.08);
+            border: 1px solid rgba(44,90,160,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(44,90,160,0.15);
+        }
+        
+        .product-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #2c5aa0, #ff6b35);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            color: white;
+        }
+        
+        .product-card h3 {
+            color: #2c5aa0;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+        
+        .product-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .product-link {
+            display: inline-block;
+            background: #ff6b35;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+        
+        .product-link:hover {
+            background: #e55a2b;
+        }
+        
+        /* 联系方式 */
+        .contact {
+            background: #2c5aa0;
+            color: white;
+            margin: 0 -2rem;
             text-align: center;
         }
-        .container {
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        
+        .contact h2 {
+            color: white;
+            margin-bottom: 2rem;
         }
-        h1 {
-            color: #333;
-            margin-bottom: 5px;
+        
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
         }
-        p {
-            color: #666;
-            font-size: 1.2em;
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1.1rem;
+        }
+        
+        .contact-item .icon {
+            width: 40px;
+            height: 40px;
+            background: #ff6b35;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        
+        /* 页脚 */
+        footer {
+            background: #1a3d70;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .about-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .contact-info {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+            
+            nav li {
+                margin: 0 1rem;
+            }
+        }
+        
+        /* 平滑滚动 */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* 动画效果 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .skill-card, .product-card {
+            animation: fadeInUp 0.6s ease forwards;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Nick</h1>
-        <p>HR</p>
-    </div>
+    <!-- 导航栏 -->
+    <nav>
+        <ul>
+            <li><a href="#home">首页</a></li>
+            <li><a href="#about">关于我</a></li>
+            <li><a href="#skills">专业技能</a></li>
+            <li><a href="#ai-products">AI产品</a></li>
+            <li><a href="#contact">联系我</a></li>
+        </ul>
+    </nav>
+
+    <!-- 头部展示区 -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Nick</h1>
+            <p class="subtitle">HR专家 & AI创新者</p>
+            <div class="tagline">用AI技术赋能人力资源管理 🚀</div>
+        </div>
+    </section>
+
+    <!-- 关于我 -->
+    <section id="about" class="section">
+        <h2>关于我</h2>
+        <div class="about-grid">
+            <div class="profile-image">
+                <div class="placeholder">N</div>
+            </div>
+            <div class="about-text">
+                <p>作为一名资深HR专家，我专注于将前沿AI技术与传统人力资源管理相结合，为企业提供创新的人才解决方案。</p>
+                <p>凭借多年的人力资源管理经验和对AI技术的深入理解，我致力于帮助企业构建更智能、更高效的人才管理体系。</p>
+                <p><strong>核心理念：</strong> 以人为本，科技赋能，让每个人才在合适的岗位上发光发热。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 专业技能 -->
+    <section id="skills" class="section">
+        <h2>专业技能</h2>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <h3>🎯 人才招聘与选拔</h3>
+                <ul>
+                    <li>AI驱动的简历筛选系统</li>
+                    <li>智能面试评估工具</li>
+                    <li>人才画像建模</li>
+                    <li>批量招聘流程优化</li>
+                </ul>
+            </div>
+            <div class="skill-card">
+                <h3>📊 绩效管理优化</h3>
+                <ul>
+                    <li>KPI智能分析系统</li>
+                    <li>员工能力评估模型</li>
+                    <li>绩效数据可视化</li>
+                    <li>个性化发展建议</li>
+                </ul>
+            </div>
+            <div class="skill-card">
+                <h3>🤖 AI工具应用</h3>
+                <ul>
+                    <li>大语言模型集成</li>
+                    <li>自动化工作流设计</li>
+                    <li>智能客服系统</li>
+                    <li>数据分析与预测</li>
+                </ul>
+            </div>
+            <div class="skill-card">
+                <h3>💼 组织发展咨询</h3>
+                <ul>
+                    <li>组织架构优化</li>
+                    <li>企业文化建设</li>
+                    <li>变革管理</li>
+                    <li>团队效能提升</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI产品展示 -->
+    <section id="ai-products" class="ai-products">
+        <div class="section">
+            <h2>AI产品与解决方案</h2>
+            <div class="product-grid">
+                <div class="product-card">
+                    <div class="product-icon">🧠</div>
+                    <h3>智能招聘助手</h3>
+                    <p>基于大语言模型的智能招聘系统，能够自动筛选简历、生成面试问题，并提供候选人匹配度分析，大幅提升招聘效率。</p>
+                    <a href="#" class="product-link">了解更多</a>
+                </div>
+                <div class="product-card">
+                    <div class="product-icon">📈</div>
+                    <h3>员工发展规划器</h3>
+                    <p>利用AI分析员工技能图谱和职业发展轨迹，为每位员工量身定制个性化的学习和发展计划，助力人才成长。</p>
+                    <a href="#" class="product-link">了解更多</a>
+                </div>
+                <div class="product-card">
+                    <div class="product-icon">🔍</div>
+                    <h3>组织健康诊断</h3>
+                    <p>通过AI算法分析组织数据，实时监测团队士气、离职风险和组织效能，为管理决策提供科学依据。</p>
+                    <a href="#" class="product-link">了解更多</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系方式 -->
+    <section id="contact" class="contact section">
+        <h2>联系我</h2>
+        <div class="contact-info">
+            <div class="contact-item">
+                <div class="icon">📧</div>
+                <span>nick.hr@email.com</span>
+            </div>
+            <div class="contact-item">
+                <div class="icon">💼</div>
+                <span>LinkedIn: /in/nick-hr-expert</span>
+            </div>
+            <div class="contact-item">
+                <div class="icon">🐙</div>
+                <span>GitHub: /nicknicknicknnn</span>
+            </div>
+        </div>
+        <p style="margin-top: 2rem; opacity: 0.9;">让我们一起探索AI时代的人力资源新可能</p>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <p>&copy; 2024 Nick - HR专家. 专注AI与人力资源的融合创新</p>
+    </footer>
+
+    <script>
+        // 平滑滚动
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                document.querySelector(targetId).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // 滚动动画效果
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // 观察所有卡片元素
+        document.querySelectorAll('.skill-card, .product-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+    </script>
 </body>
 </html> 
